@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.build_meta"  # 
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "pr-review"
@@ -9,12 +9,11 @@ description = "AI-powered PR review CLI using OpenAI"
 requires-python = ">=3.11"
 dependencies = [
     "openai>=1.0.0",
-    "python-dotenv>=1.0.0"
+    "python-dotenv>=1.0.0",
 ]
 
 [project.scripts]
 pr-review = "reviewer:main"
 
-
-[tool.setuptools]
-py-modules = ["pr_review"]  
+[tool.hatch.build.targets.wheel]
+include = ["reviewer.py"]

@@ -1,7 +1,0 @@
-pyproject.toml
-pr_review.egg-info/PKG-INFO
-pr_review.egg-info/SOURCES.txt
-pr_review.egg-info/dependency_links.txt
-pr_review.egg-info/entry_points.txt
-pr_review.egg-info/requires.txt
-pr_review.egg-info/top_level.txt

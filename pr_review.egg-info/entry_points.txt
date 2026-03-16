@@ -1,2 +1,0 @@
-[console_scripts]
-pr-review = reviewer:main
