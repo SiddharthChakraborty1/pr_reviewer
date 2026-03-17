@@ -1,7 +1,7 @@
 import ast
-from pathlib import Path
 from dataclasses import dataclass
-from typing import Optional, List, Dict
+from pathlib import Path
+from typing import Dict, List, Optional
 
 
 @dataclass
@@ -127,9 +127,10 @@ def _collect_aliases(tree: ast.Module) -> Dict[str, str]:
                 if isinstance(target, ast.Name) and isinstance(node.value, ast.Name):
                     aliases[target.id] = node.value.id
         elif isinstance(node, ast.ImportFrom):
-            for alias in node.names:
-                if alias.asname:
-                    aliases[alias.asname] = alias.name
+            imported: ast.alias
+            for imported in node.names:
+                if imported.asname and imported.name:
+                    aliases[imported.asname] = imported.name
 
     return aliases
 
@@ -167,8 +168,8 @@ def find_usages_in_repo(
 
         aliases = _collect_aliases(tree)
         reverse_aliases: Dict[str, List[str]] = {}
-        for alias, original in aliases.items():
-            reverse_aliases.setdefault(original, []).append(alias)
+        for alias_name, original in aliases.items():
+            reverse_aliases.setdefault(original, []).append(alias_name)
 
         def record(sym: str):
             if rel not in usages[sym]:
@@ -202,8 +203,10 @@ def find_usages_in_repo(
                 record(node.id)
 
             elif isinstance(node, ast.ImportFrom):
-                for alias in node.names:
-                    imported = alias.asname or alias.name
+                for imp in node.names:  # type: ignore[attr-defined]
+                    imported = getattr(imp, "asname", None) or getattr(
+                        imp, "name", None
+                    )
                     if imported in plain:
                         record(imported)
 
