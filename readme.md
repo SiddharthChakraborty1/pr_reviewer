@@ -1,5 +1,7 @@
 # PR Review CLI
 
+pypi -> https://pypi.org/project/git-ai-pr-review/0.1.0/
+
 An AI-powered code review tool that analyzes your git diff and routes it through the right level of LLM scrutiny.
 
 ## How it works
