@@ -16,10 +16,11 @@ git diff → LLM classifies change size
 ## Install
 
 ```bash
-pip install anthropic
+# Install the OpenAI client
+pip install openai python-dotenv
 
 # Run directly
-python pr_review.py
+python reviewer.py
 
 # Or install as a CLI command
 pip install -e .
@@ -30,7 +31,8 @@ pr-review
 
 ```bash
 # Set your API key
-export ANTHROPIC_API_KEY=sk-ant-...
+export OPENAI_API_KEY=sk-...    # macOS / Linux
+setx OPENAI_API_KEY "sk-..."   # Windows (PowerShell)
 
 # Review changes vs HEAD (default — unstaged/staged changes)
 pr-review
@@ -69,5 +71,6 @@ pr-review --base abc1234
 
 - AST analysis is Python-only (uses the `ast` stdlib module)
 - Skips `.venv` and `node_modules` directories
-- The diff size LLM call uses `claude-opus-4-6` for accuracy
+- The diff-size LLM call uses OpenAI (model example: `gpt-4o-mini`)
+- The codebase was refactored: core modules now include `llm/openai.py`, `ast_analyzer.py`, `diff_parser.py`, `git.py`, and `cli.py` with `reviewer.py` acting as the orchestrator
 - Reviews are also saved to `pr_review_output.md`

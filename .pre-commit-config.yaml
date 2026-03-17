@@ -1,0 +1,47 @@
+repos:
+  # Code formatting
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+        language_version: python3.11
+
+  # Import sorting
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]  # makes isort compatible with black
+
+  # Linting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.1
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+
+  # Type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.9.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [openai, python-dotenv]
+
+  # General hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace      # removes trailing spaces
+      - id: end-of-file-fixer        # ensures files end with newline
+      - id: check-yaml               # validates yaml files
+      - id: check-json               # validates json files
+      - id: check-merge-conflict     # catches leftover merge conflict markers
+      - id: detect-private-key       # blocks accidental key commits
+      - id: check-added-large-files  # blocks large files being committed
+        args: ["--maxkb=500"]
+
+  # Security
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks                 # scans for hardcoded secrets/api keys
