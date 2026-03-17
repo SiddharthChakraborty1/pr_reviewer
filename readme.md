@@ -24,7 +24,7 @@ python reviewer.py
 
 # Or install as a CLI command
 pip install -e .
-pr-review
+git-ai-pr-review
 ```
 
 ## Usage
@@ -35,16 +35,16 @@ export OPENAI_API_KEY=sk-...    # macOS / Linux
 setx OPENAI_API_KEY "sk-..."   # Windows (PowerShell)
 
 # Review changes vs HEAD (default — unstaged/staged changes)
-pr-review
+git-ai-pr-review
 
 # Review feature branch against main
-pr-review --base main
+git-ai-pr-review --base main
 
 # Review against remote main
-pr-review --base origin/main
+git-ai-pr-review --base origin/main
 
 # Review against a specific commit
-pr-review --base abc1234
+git-ai-pr-review --base abc1234
 ```
 
 ## Output

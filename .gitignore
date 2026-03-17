@@ -1,4 +1,7 @@
+pr_review_output.md
 .env
 .venv/
 __pycache__/
 .pre-commit-cache/
+dist/
+.pypirc
